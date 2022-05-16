@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STaskManagerApi", "STaskManagerApi\STaskManagerApi.csproj", "{BB4F18F6-53EA-4986-AB61-FD2B017E45D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STaskManagerApi", "STaskManagerApi\STaskManagerApi.csproj", "{BB4F18F6-53EA-4986-AB61-FD2B017E45D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STaskManagerClient", "STaskManagerClient\STaskManagerClient.csproj", "{37FBF2F1-DA80-43A3-8571-F3EBD1F62796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STaskManagerLibrary", "STaskManagerLibrary\STaskManagerLibrary.csproj", "{9D22B79A-BA4F-40BA-B6B0-56677F7B87CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{BB4F18F6-53EA-4986-AB61-FD2B017E45D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB4F18F6-53EA-4986-AB61-FD2B017E45D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB4F18F6-53EA-4986-AB61-FD2B017E45D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37FBF2F1-DA80-43A3-8571-F3EBD1F62796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37FBF2F1-DA80-43A3-8571-F3EBD1F62796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37FBF2F1-DA80-43A3-8571-F3EBD1F62796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37FBF2F1-DA80-43A3-8571-F3EBD1F62796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D22B79A-BA4F-40BA-B6B0-56677F7B87CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D22B79A-BA4F-40BA-B6B0-56677F7B87CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D22B79A-BA4F-40BA-B6B0-56677F7B87CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D22B79A-BA4F-40BA-B6B0-56677F7B87CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
