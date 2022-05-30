@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using STaskManagerLibrary;
 
-namespace STaskManagerApi
+namespace STaskManagerUserService
 {
     public partial class TaskManagerContext : DbContext
     {
@@ -19,11 +19,34 @@ namespace STaskManagerApi
         {
         }
 
+        public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<STask> Task { get; set; }
+        public virtual DbSet<Task> Task { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.HasKey(e => e.Uid)
+                    .HasName("account_pkey");
+
+                entity.ToTable("account");
+
+                entity.Property(e => e.Uid)
+                    .ValueGeneratedNever()
+                    .HasColumnName("uid");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(512)
+                    .HasColumnName("password");
+            });
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.Cid)
@@ -72,6 +95,12 @@ namespace STaskManagerApi
                     .HasColumnName("name");
 
                 entity.Property(e => e.Priority).HasColumnName("priority");
+
+                entity.HasOne(d => d.AccountNavigation)
+                    .WithMany(p => p.Task)
+                    .HasForeignKey(d => d.Account)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("task_account_fkey");
 
                 entity.HasOne(d => d.BelongstoNavigation)
                     .WithMany(p => p.Task)

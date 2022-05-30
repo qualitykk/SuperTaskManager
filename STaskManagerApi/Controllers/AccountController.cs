@@ -8,5 +8,14 @@ namespace STaskManagerApi.Controllers
     public partial class AccountController : ControllerBase
     {
         private static TaskManagerContext _context = new();
+        private static bool IsTaskDataLoaded()
+        {
+            return _context != null;
+        }
+
+        private static bool IsAccountDataLoaded()
+        {
+            return Service.Auth.IsActive();
+        }
     }
 }

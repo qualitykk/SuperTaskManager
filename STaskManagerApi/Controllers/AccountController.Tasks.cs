@@ -12,7 +12,7 @@ namespace STaskManagerApi.Controllers
         [HttpGet("{user}/tasks")]
         public ActionResult<List<STask>> GetTasks(int user)
         {
-            if (_context == null)
+            if (!IsTaskDataLoaded())
                 return NotFound();
 
             var tasks = _tasks.Where(t => t.Account == user).ToList();
@@ -20,16 +20,13 @@ namespace STaskManagerApi.Controllers
         }
         private STask? TaskById(int user, int task)
         {
-            if (_tasks == null)
-                return null;
-
             return _tasks.Where(t => t.Account == user && t.Tid == task)?.FirstOrDefault(); ;
         }
 
         [HttpGet("{user}/tasks/{taskid}")]
         public ActionResult<STask> GetTask(int user, int taskid)
         {
-            if (_context == null)
+            if (!IsTaskDataLoaded())
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
             var task = TaskById(user, taskid);
@@ -42,7 +39,7 @@ namespace STaskManagerApi.Controllers
         [HttpPost("{user}/tasks")]
         public async Task<ActionResult> PostTask(int user, [FromBody] STask t)
         {
-            if (_context == null)
+            if (!IsTaskDataLoaded())
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
             int newid = _tasks.Max(t => t.Tid) + 1;
@@ -57,7 +54,7 @@ namespace STaskManagerApi.Controllers
         [HttpPatch("{user}/tasks/{taskid}")]
         public async Task<ActionResult> PatchTask(int user, int taskid, [FromBody] STask info)
         {
-            if (_context == null)
+            if (!IsTaskDataLoaded())
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
             var task = TaskById(user, taskid);
@@ -73,6 +70,21 @@ namespace STaskManagerApi.Controllers
             task.Duedate = info.Duedate;
 
             await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{user}/tasks/{taskid")]
+        public ActionResult DeleteTask(int user, int taskid)
+        {
+            if (!IsTaskDataLoaded())
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            var task = TaskById(user, taskid);
+            if(task == null)
+                return NotFound();
+
+            _tasks.Remove(task);
 
             return Ok();
         }

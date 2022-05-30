@@ -8,11 +8,15 @@
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": null,
-   "ProjectRootNamespace": "STaskManagerApi",
+   "ProjectRootNamespace": "STaskManagerUserService",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 1,
    "Tables": [
+      {
+         "Name": "public.account",
+         "ObjectType": 0
+      },
       {
          "Name": "public.task",
          "ObjectType": 0
