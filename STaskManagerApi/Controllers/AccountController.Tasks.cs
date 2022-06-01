@@ -10,7 +10,7 @@ namespace STaskManagerApi.Controllers
         private DbSet<STask> _tasks => _context.Task;
 
         [HttpGet("{user}/tasks")]
-        public ActionResult<List<STask>> GetTasks(int user, string auth)
+        public ActionResult<List<STask>> GetTasks(int user)
         {
             if (!IsTaskDataLoaded())
                 return NotFound();
@@ -24,7 +24,7 @@ namespace STaskManagerApi.Controllers
         }
 
         [HttpGet("{user}/tasks/{taskid}")]
-        public ActionResult<STask> GetTask(int user, int taskid, string auth)
+        public ActionResult<STask> GetTask(int user, int taskid)
         {
             if (!IsTaskDataLoaded())
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -74,7 +74,7 @@ namespace STaskManagerApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{user}/tasks/{taskid")]
+        [HttpDelete("{user}/tasks/{taskid}")]
         public ActionResult DeleteTask(int user, int taskid)
         {
             if (!IsTaskDataLoaded())
