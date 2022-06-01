@@ -5,7 +5,7 @@ using STaskManagerLibrary;
 
 namespace STaskManagerApi.Controllers
 {
-    public partial class AccountController
+    public partial class AccountController : Controller
     {
         private DbSet<STask> _tasks => _context.Task;
 

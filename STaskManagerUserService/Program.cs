@@ -7,7 +7,7 @@ public class Program
 {
     public const int PORT = 66024;
     private static TaskManagerContext _context = new();
-    private static UdpClient _client = new(PORT);
+    private static readonly UdpClient _client = new(PORT);
     public static async Task Main(string[] args)
     {
         while (true)
@@ -26,7 +26,7 @@ public class Program
         switch(authReq.Type)
         {
             case RequestType.Login:
-                await TryLogonAsync(authReq.Username, authReq.Password);
+                await RespondWithAsync(request.RemoteEndPoint, TryLogon(authReq.Username, authReq.Password));
                 break;
             default:
                 await RespondWithAsync(request.RemoteEndPoint, AuthResponse.Failed());
@@ -40,9 +40,14 @@ public class Program
         await _client.SendAsync(buffer, buffer.Length, ip);
     }
 
-    public static async Task<AuthResponse> TryLogonAsync(string user, string password)
+    public static AuthResponse TryLogon(string user, string password)
     {
-
+        var entry = _context.Account.Single(a => a.Name == user);
+        if(Encryption.Check(entry.Password, password))
+        {
+            // TODO: Return auth to block other users from viewing our data 
+            return AuthResponse.Success(entry.Uid, "");
+        }
         return AuthResponse.Failed();
     }
 }

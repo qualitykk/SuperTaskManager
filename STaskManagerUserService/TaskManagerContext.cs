@@ -8,7 +8,7 @@ using STaskManagerLibrary;
 
 namespace STaskManagerUserService
 {
-    public partial class TaskManagerContext : DbContext
+    internal partial class TaskManagerContext : DbContext
     {
         public TaskManagerContext()
         {
