@@ -11,7 +11,18 @@ namespace STaskManagerApi.Controllers
         private static TaskManagerContext _context = new();
         private static bool IsTaskDataLoaded()
         {
-            return _context != null;
+            try
+            {
+                return _context != null && _context.Database.CanConnect();
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+        protected StatusCodeResult InternalError()
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace STaskManagerApi.Controllers
         public ActionResult<List<STask>> GetTasks(int user)
         {
             if (!IsTaskDataLoaded())
-                return NotFound();
+                return InternalError();
 
             var tasks = _tasks.Where(t => t.Account == user).ToList();
             return Ok(tasks);
@@ -27,7 +27,7 @@ namespace STaskManagerApi.Controllers
         public ActionResult<STask> GetTask(int user, int taskid)
         {
             if (!IsTaskDataLoaded())
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return InternalError();
 
             var task = TaskById(user, taskid);
             if (task == null)
@@ -40,7 +40,7 @@ namespace STaskManagerApi.Controllers
         public async Task<ActionResult> PostTask(int user, [FromBody] STask t)
         {
             if (!IsTaskDataLoaded())
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return InternalError();
 
             int newid = _tasks.Max(t => t.Tid) + 1;
             t.Tid = newid;
@@ -55,7 +55,7 @@ namespace STaskManagerApi.Controllers
         public async Task<ActionResult> PatchTask(int user, int taskid, [FromBody] STask info)
         {
             if (!IsTaskDataLoaded())
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return InternalError();
 
             var task = TaskById(user, taskid);
             if (task == null)
@@ -78,7 +78,7 @@ namespace STaskManagerApi.Controllers
         public ActionResult DeleteTask(int user, int taskid)
         {
             if (!IsTaskDataLoaded())
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return InternalError();
 
             var task = TaskById(user, taskid);
             if(task == null)
