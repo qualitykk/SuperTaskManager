@@ -14,27 +14,22 @@ namespace STaskManagerLibrary
         /// The ID of the user that was logged on to, if successful
         /// </summary>
         public int? Userid;
-        /// <summary>
-        /// The string this user authenticates with
-        /// </summary>
-        public string? Auth;
 
-        public AuthResponse(AuthStatus status, int? userid = 0, string? auth = null)
+        public AuthResponse(AuthStatus status, int? userid = 0)
         {
             Status = status;
             Userid = userid;
-            Auth = auth;
         }
 
         public byte[] ToBytes()
         {
-            return Encoding.UTF8.GetBytes($"{(int)Status};{Userid};{Auth}");
+            return Encoding.UTF8.GetBytes($"{(int)Status};{Userid}");
         }
 
         public static AuthResponse FromBytes(byte[] buffer)
         {
             var parts = Encoding.UTF8.GetString(buffer).Split(';');
-            return new AuthResponse((AuthStatus)int.Parse(parts[0]), int.Parse(parts[1]), parts[2]);
+            return new AuthResponse((AuthStatus)int.Parse(parts[0]), int.Parse(parts[1]));
         }
 
         public static AuthResponse Failed()
@@ -42,9 +37,9 @@ namespace STaskManagerLibrary
             return new(AuthStatus.Denied);
         }
 
-        public static AuthResponse Success(int user, string auth)
+        public static AuthResponse Success(int user)
         {
-            return new(AuthStatus.Accepted, user, auth);
+            return new(AuthStatus.Accepted, user);
         }
 
         public static implicit operator bool(AuthResponse response)

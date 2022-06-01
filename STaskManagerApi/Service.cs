@@ -22,11 +22,6 @@ namespace STaskManagerApi
                 var response = AuthResponse.FromBytes((await _client.ReceiveAsync()).Buffer);
                 return response;
             }
-
-            public static async Task<AuthResponse> Verify(string auth, int userid)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

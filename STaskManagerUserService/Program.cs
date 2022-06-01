@@ -23,15 +23,7 @@ public class Program
     public static async Task HandleRequest(UdpReceiveResult request)
     {
         var authReq = AuthRequest.FromBytes(request.Buffer);
-        switch(authReq.Type)
-        {
-            case RequestType.Login:
-                await RespondWithAsync(request.RemoteEndPoint, TryLogon(authReq.Username, authReq.Password));
-                break;
-            default:
-                await RespondWithAsync(request.RemoteEndPoint, AuthResponse.Failed());
-                break;
-        }
+        await RespondWithAsync(request.RemoteEndPoint, TryLogon(authReq.Username, authReq.Password));
     }
 
     private static async Task RespondWithAsync(IPEndPoint ip, AuthResponse response)
@@ -45,8 +37,7 @@ public class Program
         var entry = _context.Account.Single(a => a.Name == user);
         if(Encryption.Check(entry.Password, password))
         {
-            // TODO: Return auth to block other users from viewing our data 
-            return AuthResponse.Success(entry.Uid, "");
+            return AuthResponse.Success(entry.Uid);
         }
         return AuthResponse.Failed();
     }
