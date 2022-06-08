@@ -6,6 +6,7 @@ namespace STaskManagerUserService;
 #nullable disable
 public class Program
 {
+    public static bool Active { get; private set; } = false;
     public const int PORT = 6024;
     private static TaskManagerContext _context = new();
     private static UdpClient _server;
@@ -14,6 +15,7 @@ public class Program
         _server = new(PORT);
 
         Console.WriteLine($"STM User Service Started on port {PORT}...");
+        Active = true;
         while (true)
         {
             IPEndPoint client = null;
@@ -28,24 +30,26 @@ public class Program
 
     public static async Task HandleRequest(IPEndPoint client, byte[] buffer)
     {
-        var authReq = AuthRequest.FromBytes(buffer);
+        var authReq = LoginRequest.FromBytes(buffer);
         await RespondWithAsync(client, TryLogon(authReq.Username, authReq.Password));
     }
 
-    private static async Task RespondWithAsync(IPEndPoint ip, AuthResponse response)
+    private static async Task RespondWithAsync(IPEndPoint ip, LoginResponse response)
     {
         var buffer = response.ToBytes();
         await _server.SendAsync(buffer, buffer.Length, ip);
         Console.WriteLine($"Responded with {response.Status} to {ip}");
     }
 
-    public static AuthResponse TryLogon(string user, string password)
+    public static LoginResponse TryLogon(string user, string password)
     {
         var entry = _context.Account.Single(a => a.Name == user);
         if(Encryption.Check(entry.Password, password))
         {
-            return AuthResponse.Success(entry.Uid);
+            int id = entry.Uid;
+            long auth = Auth.Get(id);
+            return LoginResponse.Success(id, auth);
         }
-        return AuthResponse.Failed();
+        return LoginResponse.Failed();
     }
 }
