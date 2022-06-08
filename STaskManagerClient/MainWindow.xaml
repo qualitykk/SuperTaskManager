@@ -5,6 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STaskManagerClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+        Title="Super Task Manager" Height="450" Width="800" ResizeMode="CanResizeWithGrip">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="12*" />
+        </Grid.ColumnDefinitions>
+        
+        <Rectangle Grid.ColumnSpan="2" Fill="#FF2DA8E3"/>
+
+        <StackPanel Grid.Row="1" Margin="10,10,10,10" >
+            <Button Height="35" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20,20,20,20">
+            <Label Content="Tasks" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
+            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
+            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
+            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
+        </StackPanel>
+    </Grid>
 </Window>
