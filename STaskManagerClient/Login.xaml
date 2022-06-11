@@ -5,24 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STaskManagerClient"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="300">
+        Title="Super Task Manager - Login" Height="450" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
         <Rectangle Fill="#FF2DA8E3"/>
 
-        <StackPanel Grid.Row="2">
-            <Label />
-            <TextBox />
+        <StackPanel Grid.Row="1" Margin="30, 0, 30, 0">
+            <Label Content="Username" HorizontalAlignment="Center" Height="45" FontWeight="Bold" FontSize="24"/>
+            <TextBox x:Name="tbUsername" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="45" FontSize="24"/>
         </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="30, 0, 30, 0">
+            <Label Content="Passwort" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <PasswordBox x:Name="tbPassword" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="45" FontSize="24"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Margin="30, 30, 30, 30" Background="#FF97FFA5" Foreground="White" Content="Login" FontSize="24" FontWeight="Bold" Click="Button_Click" VerticalAlignment="Center"/>
     </Grid>
 </Window>
