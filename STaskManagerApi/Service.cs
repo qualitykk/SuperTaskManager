@@ -29,7 +29,7 @@ namespace STaskManagerApi
 
             public static async Task<bool> TryAuthAsync(int uid, string auth)
             {
-                
+                throw new NotImplementedException();
             }
         }
     }

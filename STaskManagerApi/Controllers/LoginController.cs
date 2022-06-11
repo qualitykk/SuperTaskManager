@@ -8,13 +8,13 @@ namespace STaskManagerApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<LoginResponse>> GetLogin([FromBody] LoginRequest auth)
         {
             if(!Service.Auth.IsActive())
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var response = await Service.Auth.TryLogon(auth.Username, auth.Password);
+            var response = await Service.Auth.TryLogonAsync(auth.Username, auth.Password);
             if(!response)
                 return StatusCode(StatusCodes.Status403Forbidden);
             else
