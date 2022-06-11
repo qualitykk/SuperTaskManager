@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace STaskManagerLibrary
 {
-    public struct AuthResponse
+    public struct LoginResponse
     {
-        public AuthStatus Status;
-        public bool Successful => Status == AuthStatus.Accepted;
+        public LoginStatus Status;
+        public bool Successful => Status == LoginStatus.Accepted;
         /// <summary>
         /// The ID of the user that was logged on to, if successful
         /// </summary>
         public int? Userid;
+        public long? Auth;
 
-        public AuthResponse(AuthStatus status, int? userid = 0)
+        public LoginResponse(LoginStatus status, int? userid = 0, long? auth = 0)
         {
             Status = status;
             Userid = userid;
+            Auth = auth;
         }
 
         public byte[] ToBytes()
@@ -26,29 +28,29 @@ namespace STaskManagerLibrary
             return Encoding.UTF8.GetBytes($"{(int)Status};{Userid}");
         }
 
-        public static AuthResponse FromBytes(byte[] buffer)
+        public static LoginResponse FromBytes(byte[] buffer)
         {
             var parts = Encoding.UTF8.GetString(buffer).Split(';');
-            return new AuthResponse((AuthStatus)int.Parse(parts[0]), int.Parse(parts[1]));
+            return new LoginResponse((LoginStatus)int.Parse(parts[0]), int.Parse(parts[1]));
         }
 
-        public static AuthResponse Failed()
+        public static LoginResponse Failed()
         {
-            return new(AuthStatus.Denied);
+            return new(LoginStatus.Denied);
         }
 
-        public static AuthResponse Success(int user)
+        public static LoginResponse Success(int user, long auth)
         {
-            return new(AuthStatus.Accepted, user);
+            return new(LoginStatus.Accepted, user, auth);
         }
 
-        public static implicit operator bool(AuthResponse response)
+        public static implicit operator bool(LoginResponse response)
         {
             return response.Successful;
         }
     }
 
-    public enum AuthStatus
+    public enum LoginStatus
     {
         Unavailable,
         Denied,

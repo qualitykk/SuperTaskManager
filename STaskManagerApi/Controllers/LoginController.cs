@@ -9,7 +9,7 @@ namespace STaskManagerApi.Controllers
     public class LoginController : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<AuthResponse>> GetLogin([FromBody] AuthRequest auth)
+        public async Task<ActionResult<LoginResponse>> GetLogin([FromBody] LoginRequest auth)
         {
             if(!Service.Auth.IsActive())
                 return StatusCode(StatusCodes.Status500InternalServerError);

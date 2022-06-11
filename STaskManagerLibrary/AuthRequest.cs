@@ -8,25 +8,25 @@ namespace STaskManagerLibrary
 {
     public struct AuthRequest
     {
-        public string Username;
-        public string Password;
-        public AuthRequest(string user, string pass)
+        public int UserID;
+        public long Auth;
+        public AuthRequest(int userID, long auth)
         {
-            Username = user;
-            Password = pass;
+            UserID = userID;
+            Auth = auth;
         }
 
         public byte[] ToBytes()
         {
-            return Encoding.UTF8.GetBytes($"{Username};{Password}");
+            return Encoding.UTF8.GetBytes($"{UserID};{Auth}");
         }
 
         public static AuthRequest FromBytes(byte[] buffer)
         {
             var parts = Encoding.UTF8.GetString(buffer).Split(';');
             AuthRequest request = new();
-            request.Username = parts[1];
-            request.Password = parts[2];
+            request.UserID = int.Parse(parts[1]);
+            request.Auth = long.Parse(parts[2]);
 
             return request;
         }
