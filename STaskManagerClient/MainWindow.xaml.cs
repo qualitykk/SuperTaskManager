@@ -47,12 +47,9 @@ namespace STaskManagerClient
             Background = bg;
             tcMain.Background = bg;
 
-            UIElementCollection children = ((Panel)Content).Children;
-            SolidColorBrush textColor = new(s.TextColor);
-            foreach(var lbl in children.OfType<Label>())
-            {
-                lbl.Foreground = textColor;
-            }
+            SolidColorBrush brush = new(s.TextColor);
+            foreach (var label in spSettings.Children.OfType<Label>())
+                label.Foreground = brush;
         }
 
         #region Tab Content Creation
@@ -72,17 +69,19 @@ namespace STaskManagerClient
                 return;
 
             currentSettings = Settings.Instance != null ? Settings.Instance : new();
-            foreach(var prop in currentSettings.GetType().GetProperties())
+            SolidColorBrush labelBrush = new(currentSettings.TextColor);
+            SolidColorBrush editorBrush = new(Colors.Black);
+            foreach (var prop in currentSettings.GetType().GetProperties())
             {
                 var get = prop.GetGetMethod();
                 if (get == null || get.IsStatic)
                     continue;
 
                 Label name = new() { Content = prop.Name };
-                name.Foreground = new SolidColorBrush(Colors.Black);
+                name.Foreground = labelBrush;
 
                 TextBox editor = new();
-                editor.Foreground = new SolidColorBrush(Colors.Black);
+                editor.Foreground = editorBrush;
 
                 Binding binding = new(prop.Name);
                 binding.Source = currentSettings;
