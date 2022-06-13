@@ -5,30 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STaskManagerClient"
         mc:Ignorable="d"
-        Title="Super Task Manager" Height="450" Width="800" ResizeMode="CanResizeWithGrip">
+        Title="Super Task Manager" Height="450" MinHeight="400" Width="800" MinWidth="450" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="9*" />
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*" />
-            <ColumnDefinition Width="12*" />
-        </Grid.ColumnDefinitions>
-        
-        <Rectangle Grid.ColumnSpan="2" Fill="#FF2DA8E3"/>
+        <Rectangle Fill="#FF2DA8E3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
-        <StackPanel Grid.Row="1" Margin="10,10,10,10" >
-            <Button Height="35" />
-        </StackPanel>
+        <TabControl x:Name="tcMain" Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem x:Name="tbiList" Header="Task List" MinWidth="150">
+                <StackPanel x:Name="spTasks" Grid.Row="1" Margin="20,20,20,20">
+                    <Label Content="Tasks" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+                    <TreeView Margin="45, 0, 45, 0">
+                        <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="BorderBrush" Value="#666666" />
+                            <Setter Property="BorderThickness" Value="0, 1, 0, 1" />
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        </Style>
+                        </TreeView.Resources>
+                        
+                        <TreeViewItem>
+                            <TreeViewItem>
+                                
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem/>
+                        <TreeViewItem/>
+                        <TreeViewItem/>
+                        <TreeViewItem/>
+                        <TreeViewItem>
+                            <TreeViewItem>
+                                
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="tbiCalendar" Header="Calendar" MinWidth="150">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20,20,20,20">
-            <Label Content="Tasks" Margin="0,15,0,15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
-            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
-            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
-            <Button Height="45" Margin="30,5,30,5" Background="#FF97FFA5"/>
-        </StackPanel>
+                    <StackPanel Grid.Column="0" x:Name="spMonday">
+                        <Label Content="Monday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="1/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" x:Name="spTuesday">
+                        <Label Content="Tuesday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="2/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" x:Name="spWednesday">
+                        <Label Content="Wednesday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="3/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" x:Name="spThursday">
+                        <Label Content="Thursday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="4/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="4" x:Name="spFriday">
+                        <Label Content="Friday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="5/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="5" x:Name="spSaturday">
+                        <Label Content="Saturday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="6/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="6" x:Name="spSunday">
+                        <Label Content="Sunday" HorizontalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="Black" FontSize="18"/>
+                        <Label Content="7/1" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tbiSettings" Header="Settings" MinWidth="150">
+                <StackPanel x:Name="spSettings" Margin="20,20,20,20">
+                    <StackPanel Margin="80,0,80,20">
+                        <Button x:Name="btnSave" Content="Save Changes" Click="btnSave_Click"/>
+                        <Button x:Name="btnReset" Content="Reset to Default" />
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
