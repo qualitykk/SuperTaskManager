@@ -103,5 +103,14 @@ namespace STaskManagerClient
             MessageBox.Show("Settings Applied and Saved!");
         }
         #endregion
+
+        private async void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            currentSettings = new();
+            UpdateFromSettings(currentSettings);
+            await currentSettings.SaveAsync(SettingsFile);
+
+            MessageBox.Show("Settings reset to default!");
+        }
     }
 }

@@ -96,7 +96,7 @@
                 <StackPanel x:Name="spSettings" Margin="20,20,20,20">
                     <StackPanel Margin="80,0,80,20">
                         <Button x:Name="btnSave" Content="Save Changes" Click="btnSave_Click"/>
-                        <Button x:Name="btnReset" Content="Reset to Default" />
+                        <Button x:Name="btnReset" Content="Reset to Default" Click="btnReset_Click" />
                     </StackPanel>
                 </StackPanel>
             </TabItem>
