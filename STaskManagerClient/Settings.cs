@@ -15,6 +15,7 @@ namespace STaskManagerClient
     {
         public static Settings Instance { get; set; }
         public Color BackgroundColor { get; set; } = Colors.White;
+        public Color TextColor { get; set; } = Colors.Black;
         public bool SaveLoginInfo { get; set; } = true;
         public Settings()
         {

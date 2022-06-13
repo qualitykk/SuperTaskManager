@@ -46,6 +46,13 @@ namespace STaskManagerClient
             SolidColorBrush bg = new(s.BackgroundColor);
             Background = bg;
             tcMain.Background = bg;
+
+            UIElementCollection children = ((Panel)Content).Children;
+            SolidColorBrush textColor = new(s.TextColor);
+            foreach(var lbl in children.OfType<Label>())
+            {
+                lbl.Foreground = textColor;
+            }
         }
 
         #region Tab Content Creation
