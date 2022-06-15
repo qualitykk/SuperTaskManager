@@ -11,9 +11,9 @@ namespace STaskManagerClient
 {
     internal static class API
     {
-        private static int userId;
+        internal static int userId;
         private static long auth;
-        private static bool loggedIn => userId != default;
+        private static bool loggedIn => userId != 0;
 
         private const string ApiUrl = "https://localhost:5001/api/";
         private static HttpClient client = new HttpClient() { BaseAddress = new Uri(ApiUrl) };
@@ -53,7 +53,6 @@ namespace STaskManagerClient
 #nullable disable
             userId = (int)response.Userid;
             auth = (long)response.Auth;
-            client.BaseAddress = new Uri(ApiUrl + $"{userId}/");
 #nullable restore
 
             return true;
@@ -64,7 +63,7 @@ namespace STaskManagerClient
             if (!loggedIn)
                 return null;
 
-            var request = await client.GetAsync("tasks");
+            var request = await client.GetAsync($"tasks/{userId}");
             if (!request.IsSuccessStatusCode)
                 return null;
 

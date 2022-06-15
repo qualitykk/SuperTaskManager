@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;
+using System.Collections.ObjectModel;
+using STaskManagerLibrary;
 
 #nullable disable
 
@@ -23,15 +25,34 @@ namespace STaskManagerClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<Category> Categories { get; set; } = new();
+        public ObservableCollection<STask> Tasks { get; set; } = new();
         public MainWindow()
         {
             InitializeComponent();
+
+            lbTasks.ItemsSource = Tasks;
+
+            API.userId = 1; // TEMP
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Loading categories...");
+            var cs = await API.GetCategoriesAsync();
+            if (cs != null)
+                foreach (var c in cs)
+                    Categories.Add(c);
+
+            Console.WriteLine("Loading tasks...");
+            var ts = await API.GetTasksAsync();
+            if(ts != null)
+                foreach (var t in ts)
+                    Tasks.Add(t);
+
             await LoadSettingsAsync();
             UpdateFromSettings(Settings.Instance);
+            
             Console.WriteLine("Finished Loading Window!");
         }
 
