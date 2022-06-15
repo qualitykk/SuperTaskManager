@@ -30,8 +30,16 @@ public class Program
 
     public static async Task HandleRequest(IPEndPoint client, byte[] buffer)
     {
-        var authReq = LoginRequest.FromBytes(buffer);
-        await RespondWithAsync(client, TryLogon(authReq.Username, authReq.Password));
+        byte type = buffer[0];
+        byte[] payload = buffer.Skip(1).ToArray();
+        switch(type)
+        {
+            case 0x1:
+                var authReq = LoginRequest.FromBytes(payload);
+                await RespondWithAsync(client, TryLogon(authReq.Username, authReq.Password));
+                break;
+        }
+        
     }
 
     private static async Task RespondWithAsync(IPEndPoint ip, LoginResponse response)

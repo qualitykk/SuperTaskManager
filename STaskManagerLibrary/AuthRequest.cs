@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace STaskManagerLibrary
 {
-    public struct AuthRequest
+    public class AuthRequest
     {
         public int UserID;
         public long Auth;
@@ -24,9 +24,7 @@ namespace STaskManagerLibrary
         public static AuthRequest FromBytes(byte[] buffer)
         {
             var parts = Encoding.UTF8.GetString(buffer).Split(';');
-            AuthRequest request = new();
-            request.UserID = int.Parse(parts[1]);
-            request.Auth = long.Parse(parts[2]);
+            AuthRequest request = new(int.Parse(parts[0]), long.Parse(parts[1]));
 
             return request;
         }

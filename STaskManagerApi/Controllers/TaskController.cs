@@ -34,7 +34,7 @@ namespace STaskManagerApi.Controllers
         }
         #endregion
 
-        [HttpGet("{userId}/categories")]
+        [HttpGet("categories")]
         public ActionResult<List<Category>> GetCategories()
         {
             if (!IsTaskDataLoaded())

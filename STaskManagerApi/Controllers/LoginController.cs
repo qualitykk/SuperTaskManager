@@ -11,14 +11,21 @@ namespace STaskManagerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<LoginResponse>> GetLogin([FromBody] LoginRequest auth)
         {
-            if(!Service.Auth.IsActive())
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            if (auth == null)
+                return BadRequest();
 
-            var response = await Service.Auth.TryLogonAsync(auth.Username, auth.Password);
-            if(!response)
-                return StatusCode(StatusCodes.Status403Forbidden);
-            else
-                return Ok(response);
+            try
+            {
+                var response = await Service.Auth.TryLogonAsync(auth.Username, auth.Password);
+                if (!response)
+                    return StatusCode(StatusCodes.Status403Forbidden);
+                else
+                    return Ok(response);
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

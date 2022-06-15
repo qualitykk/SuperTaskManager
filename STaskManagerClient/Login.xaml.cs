@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
+using System.Net.Http;
 
 namespace STaskManagerClient
 {
@@ -37,17 +38,25 @@ namespace STaskManagerClient
             }
 
             // var result = true;
-            var result = await API.LoginAsync(user, Convert.ToBase64String(hash.ComputeHash(Encoding.UTF8.GetBytes(password))));
-            if(!result)
+            var hashed = Convert.ToBase64String(hash.ComputeHash(Encoding.UTF8.GetBytes(password)));
+            try
             {
-                MessageBox.Show("Incorrect password or username!");
+                var result = await API.LoginAsync(user, hashed);
+                if (!result)
+                {
+                    MessageBox.Show("Incorrect password or username!");
+                }
+                else
+                {
+                    MainWindow window = new();
+                    window.Show();
+                    Application.Current.MainWindow = window;
+                    Close();
+                }
             }
-            else
+            catch(HttpRequestException ex)
             {
-                MainWindow window = new();
-                window.Show();
-                Application.Current.MainWindow = window;
-                Close();
+                MessageBox.Show(ex.Message, "Error while trying to log in");
             }
             return;
         }

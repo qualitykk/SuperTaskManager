@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace STaskManagerLibrary
 {
-    public struct LoginRequest
+    public class LoginRequest
     {
         public string Username;
         public string Password;
-        public LoginRequest(string user, string pass)
+        public LoginRequest(string username, string password)
         {
-            Username = user;
-            Password = pass;
+            Username = username;
+            Password = password;
         }
 
         public byte[] ToBytes()
@@ -24,9 +24,7 @@ namespace STaskManagerLibrary
         public static LoginRequest FromBytes(byte[] buffer)
         {
             var parts = Encoding.UTF8.GetString(buffer).Split(';');
-            LoginRequest request = new();
-            request.Username = parts[1];
-            request.Password = parts[2];
+            LoginRequest request = new(parts[0], parts[1]);
 
             return request;
         }

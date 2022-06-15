@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace STaskManagerLibrary
 {
-    public struct LoginResponse
+    public class LoginResponse
     {
         public LoginStatus Status;
         public bool Successful => Status == LoginStatus.Accepted;

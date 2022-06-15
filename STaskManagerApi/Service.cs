@@ -11,10 +11,6 @@ namespace STaskManagerApi
         {
             private static readonly UdpClient _client = new();
             private static readonly IPEndPoint remoteEndpoint = new(IPAddress.Loopback, PORT);
-            public static bool IsActive()
-            {
-                return Active;
-            }
             public static async Task<LoginResponse> TryLogonAsync(string user, string pass)
             {
                 LoginRequest request = new(user, pass);
